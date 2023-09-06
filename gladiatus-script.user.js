@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Gladiatus Script
+// @name         Gladiatus Script 2
 // @version      2.6
 // @description  Dodatek do gry Gladiatus
 // @author       etaoin
