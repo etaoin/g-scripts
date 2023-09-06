@@ -716,7 +716,7 @@
         *   Use Food   *
         ***************/
 
-        if (player.hp < 10) {
+        if (player.hp < 100) {
             console.log("Low health");
 
             var lowHealthAlert = document.createElement("div");
@@ -763,13 +763,15 @@
                 const submenuParent = document.getElementById("submenu1");
                 if (submenuParent) {
                     const anchors = submenuParent.querySelectorAll("a");
-                    anchors[4]?.click();
+                    anchors[5]?.click();
                 }
         
+                setTimeout(1000)
                 // Click correct shop tab
                 const shopTabs = document.getElementsByClassName("shopTab");
                 shopTabs[1]?.click();
-        
+                setTimeout(1000)
+
                 // Find position of cheapest element
                 const shopArr = document.getElementById("shop")?.children;
                 if (shopArr) {
