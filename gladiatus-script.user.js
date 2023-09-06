@@ -915,23 +915,9 @@
                 } else {
                    
                     
-                        const levels = new Array();
-                        levels[0] = Number(document.getElementById("own2").getElementsByTagName("td")[29].firstChild.nodeValue)
-                        levels[1] = Number(document.getElementById("own2").getElementsByTagName("td")[27].firstChild.nodeValue)
-                        levels[2] = Number(document.getElementById("own2").getElementsByTagName("td")[25].firstChild.nodeValue)
-                        levels[3] = Number(document.getElementById("own2").getElementsByTagName("td")[23].firstChild.nodeValue)
-
-                        let opponentIndex;
-
-                        if (arenaOpponentLevel === "min") {
-                            opponentIndex = getSmallestIntIndex(levels)
-                        } else if (arenaOpponentLevel === "max") {
-                            opponentIndex = getLargestIntIndex(levels)
-                        } else {
-                            opponentIndex = getRandomIntIndex(levels)
-                        }
+                     
                 
-                        document.getElementsByClassName("attack")[opponentIndex].click();
+                        document.getElementsByClassName("attack")[3].click();
                     
                 }
             };
