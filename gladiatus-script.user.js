@@ -913,17 +913,13 @@
                 } else if (!inArenaPage) {
                     document.getElementsByClassName("cooldown_bar_link")[2].click();
                 } else {
-                    const inArenaProvPage = document.getElementsByTagName("td")[1].firstChild.hasClass("awesome-tabs current");
-
-                    if (!inArenaProvPage) {
-                        document.getElementsByTagName("td")[1].firstElementChild.click();
-                    } else { 
+                   
+                    
                         const levels = new Array();
-                        levels[0] = Number(document.getElementById("own2").getElementsByTagName("td")[1].firstChild.nodeValue)
-                        levels[1] = Number(document.getElementById("own2").getElementsByTagName("td")[5].firstChild.nodeValue)
-                        levels[2] = Number(document.getElementById("own2").getElementsByTagName("td")[9].firstChild.nodeValue)
-                        levels[3] = Number(document.getElementById("own2").getElementsByTagName("td")[13].firstChild.nodeValue)
-                        levels[4] = Number(document.getElementById("own2").getElementsByTagName("td")[17].firstChild.nodeValue)
+                        levels[0] = Number(document.getElementById("own2").getElementsByTagName("td")[29].firstChild.nodeValue)
+                        levels[1] = Number(document.getElementById("own2").getElementsByTagName("td")[27].firstChild.nodeValue)
+                        levels[2] = Number(document.getElementById("own2").getElementsByTagName("td")[25].firstChild.nodeValue)
+                        levels[3] = Number(document.getElementById("own2").getElementsByTagName("td")[23].firstChild.nodeValue)
 
                         let opponentIndex;
 
@@ -936,7 +932,7 @@
                         }
                 
                         document.getElementsByClassName("attack")[opponentIndex].click();
-                    }
+                    
                 }
             };
 
