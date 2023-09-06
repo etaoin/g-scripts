@@ -638,6 +638,8 @@
     *    Helpers    *
     ****************/
 
+    
+
     function getRandomInt(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
@@ -741,7 +743,92 @@
             };
             showLowHealthAlert();
 
-            // @TODO
+            function dragAndDrop(sourceElem, targetElem) {
+                const sourceRect = sourceElem.getBoundingClientRect();
+                const targetRect = targetElem.getBoundingClientRect();
+                const sourceX = sourceRect.left + (sourceRect.width / 2);
+                const sourceY = sourceRect.top + (sourceRect.height / 2);
+                const targetX = targetRect.left + (targetRect.width / 2);
+                const targetY = targetRect.top + (targetRect.height / 2);
+        
+                const options = { bubbles: true, cancelable: true, view: window };
+        
+                sourceElem.dispatchEvent(new MouseEvent('mousedown', options));
+                targetElem.dispatchEvent(new MouseEvent('mousemove', { ...options, clientX: targetX, clientY: targetY }));
+                targetElem.dispatchEvent(new MouseEvent('mouseup', options));
+            }
+        
+            function actionBuyHealth() {
+                // Navigate to General Goods shop
+                const submenuParent = document.getElementById("submenu1");
+                if (submenuParent) {
+                    const anchors = submenuParent.querySelectorAll("a");
+                    anchors[4]?.click();
+                }
+        
+                // Click correct shop tab
+                const shopTabs = document.getElementsByClassName("shopTab");
+                shopTabs[1]?.click();
+        
+                // Find position of cheapest element
+                const shopArr = document.getElementById("shop")?.children;
+                if (shopArr) {
+                    let lowestElem = shopArr[0];
+                    let lowestNum;
+        
+                    Array.from(shopArr).forEach((item) => {
+                        const str = item.getAttribute("data-tooltip");
+                        if (!str) return;
+                        const regex = /Merchant Price (\d+)/;
+                        const match = regex.exec(str);
+                        let price;
+                        if (match && match[1]) {
+                            price = parseInt(match[1]);
+                        }
+                        if (price && (!lowestNum || price < lowestNum)) {
+                            lowestNum = price;
+                            lowestElem = item;
+                        }
+                    });
+        
+                    const dummyPosition = document.getElementsByClassName("copyright")[0];
+                    dragAndDrop(lowestElem, dummyPosition);
+                }
+            }
+        
+            function actionHeal() {
+                // Navigate to Overview
+                // Your logic here
+        
+                // Find cheapest inventory position
+                const invArr = document.getElementById("inv")?.children;
+                if (invArr) {
+                    let lowestElem = invArr[0];
+                    let lowestNum;
+        
+                    Array.from(invArr).forEach((item) => {
+                        const str = item.getAttribute("data-tooltip");
+                        if (!str) return;
+                        const regex = /Heals (\d+)/;
+                        const match = regex.exec(str);
+                        let price;
+                        if (match && match[1]) {
+                            price = parseInt(match[1]);
+                        }
+                        if (price && (!lowestNum || price < lowestNum)) {
+                            lowestNum = price;
+                            lowestElem = item;
+                        }
+                    });
+        
+                    const centerAvatar = document.getElementById("avatar");
+                    dragAndDrop(lowestElem, centerAvatar);
+                }
+            }
+
+            
+            actionBuyHealth()
+        
         }
 
         /****************
