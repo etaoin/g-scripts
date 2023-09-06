@@ -2,7 +2,7 @@
 // @name         Gladiatus Script
 // @version      2.6
 // @description  Dodatek do gry Gladiatus
-// @author       Eryk Bodziony
+// @author       etaoin
 // @match        *://*.gladiatus.gameforge.com/game/index.php*
 // @exclude      *://*.gladiatus.gameforge.com/game/index.php?mod=start
 // @downloadURL  https://github.com/etaoin/g-scripts/raw/master/gladiatus-script.user.js
