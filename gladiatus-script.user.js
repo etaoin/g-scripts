@@ -931,7 +931,7 @@
         /************************
         * Go Arena Provinciarum *
         ************************/
-else if (checkArenaResult == true) {
+/* else if (checkArenaResult == true) {
 
 
 function readLastArenaFight() {
@@ -1024,8 +1024,8 @@ function clickLastArenaFightDetails() {
 }
 
 
-navigateToArenaResults();
-}
+navigateToArenaResults(); 
+}*/
         else if (doArena === true && document.getElementById("cooldown_bar_fill_arena").classList.contains("cooldown_bar_fill_ready") === true) {
             function goArena() {
                 const inArenaPage = document.getElementsByTagName("body")[0].id === "arenaPage";
