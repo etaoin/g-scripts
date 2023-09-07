@@ -933,21 +933,48 @@
         ************************/
 else if (checkArenaResult == true) {
 
+
 function readLastArenaFight() {
+    const myPlayerName = 'SuukusMadikus';
     const reportHeader = document.getElementById('reportHeader');
-    if (reportHeader) {
+    const reportReward = document.querySelector('.report_reward');
+
+    if (reportHeader && reportReward) {
         const winnerText = reportHeader.querySelector('td:nth-child(2)').textContent;
         const winner = winnerText.replace('Winner: ', '').trim();
-        console.log(`Winner is ${winner}`);
 
-        // Store the winner's name in local storage
-        localStorage.setItem('lastArenaFightWinner', winner);
+        if (winner === myPlayerName) {
+            const lootParagraphs = reportReward.querySelectorAll('p');
+            let lootInfo = {};
+
+            lootParagraphs.forEach(p => {
+                const text = p.textContent;
+                if (text.includes('has raided:')) {
+                    const goldAmount = text.match(/has raided:\s*(\d+)/)[1];
+                    lootInfo.gold = parseInt(goldAmount, 10);
+                } else if (text.includes('experience point')) {
+                    const xpAmount = text.match(/\d+/)[0];
+                    lootInfo.xp = parseInt(xpAmount, 10);
+                } else if (text.includes('honour')) {
+                    const honourAmount = text.match(/\d+/)[0];
+                    lootInfo.honour = parseInt(honourAmount, 10);
+                }
+            });
+
+            console.log(`Loot info: ${JSON.stringify(lootInfo)}`);
+
+            // Store the loot info in local storage
+            localStorage.setItem('lastArenaFightLoot', JSON.stringify(lootInfo));
+                  localStorage.setItem('lastArenaFightWinner', winner);
         localStorage.setItem('checkArenaResult', false);
-
+        } else {
+            console.log(`Winner is ${winner}, not storing loot.`);
+        }
     } else {
-        console.log('Could not find the report header.');
+        console.log('Could not find the report header or reward.');
     }
 }
+
 
       function navigateToArenaResults() {
         const currentTab = document.querySelector('.awesome-tabs.current');
