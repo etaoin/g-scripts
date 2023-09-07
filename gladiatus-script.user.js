@@ -74,6 +74,10 @@
         nextQuestTime = Number(localStorage.getItem('nextQuestTime'));
     }
 
+    let sellPackages = false;
+    if (localStorage.getItem('sellPackages')) {
+        sellPackages = localStorage.getItem('sellPackages') === "true" ? true : false;
+    }
     // Expedition
 
     let doExpedition = true;
@@ -692,10 +696,53 @@
 
         return ms;
     };
+function sellLeftoverPackages() {
+  // Check if we're on the Packages screen
+  const currentTab = document.querySelector('.awesome-tabs.current');
+  if (currentTab && currentTab.innerHTML === 'Packages') {
+    // We're on the Packages screen
+    performPackageActions();
+  } else {
+    // Navigate to Packages screen
+    const packagesButton = document.getElementById('menue_packages');
+    if (packagesButton) {
+      packagesButton.click();
+      // Wait for navigation and then perform package actions
+      setTimeout(performPackageActions, 2000);
+    }
+  }
+}
 
+function performPackageActions() {
+  // Find the select element and set its value to 'allPackages'
+  const packageSelect = document.querySelector('select[name="packageSelection"]');
+  if (packageSelect) {
+    packageSelect.value = 'resourcesOnCurrentPage';
+  }
+
+  // Find the action select element and set its value to 'sell'
+  const actionSelect = document.querySelector('select[name="packageAction"]');
+  if (actionSelect) {
+    actionSelect.value = 'sell';
+  }
+
+  // Find the button and simulate a click
+  const goButton = document.getElementById('packageAction');
+  if (goButton) {
+    goButton.click();
+  }
+  setTimeout(() => {
+    const yesButton = document.getElementById('linkresourcesOnCurrentPageSell');
+    if (yesButton) {
+      yesButton.click();
+    }
+  }, 500);
+}
     /****************
     *    Auto Go    *
     ****************/
+
+
 
     function autoGo() {
 
@@ -724,7 +771,11 @@
         /***************
         *   Use Food   *
         ***************/
-
+        if (sellPackages == true) {
+debugger;
+                localStorage.setItem("sellPackages",false);
+                sellLeftoverPackages();
+        }
         if (player.hp < 10 ) {
             console.log("Low health");
    
@@ -931,7 +982,7 @@
         /************************
         * Go Arena Provinciarum *
         ************************/
-/* else if (checkArenaResult == true) {
+else if (checkArenaResult == true) {
 
 
 function readLastArenaFight() {
@@ -1024,8 +1075,8 @@ function clickLastArenaFightDetails() {
 }
 
 
-navigateToArenaResults(); 
-}*/
+navigateToArenaResults();
+}
         else if (doArena === true && document.getElementById("cooldown_bar_fill_arena").classList.contains("cooldown_bar_fill_ready") === true) {
             function goArena() {
                 const inArenaPage = document.getElementsByTagName("body")[0].id === "arenaPage";
