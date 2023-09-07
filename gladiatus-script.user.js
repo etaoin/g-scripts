@@ -110,6 +110,11 @@
         arenaOpponentLevel = localStorage.getItem('arenaOpponentLevel');
     };
 
+ let checkArenaResult = true;
+    if (localStorage.getItem('checkArenaResult')) {
+        checkArenaResult = localStorage.getItem('checkArenaResult') === "true" ? true : false;
+    };
+
     // Circus
 
     let doCircus = true;
@@ -699,6 +704,7 @@
         const currentTime = new Date().getTime();
         const clickDelay = getRandomInt(900, 2400);
 
+
         // Claim Daily Reward
 
         if (document.getElementById("blackoutDialogLoginBonus") !== null) {
@@ -747,48 +753,7 @@
             };
             showLowHealthAlert();
 
-     function dragAndDrop(sourceElem, targetElem) {
-    const sourceRect = sourceElem.getBoundingClientRect();
-    const targetRect = targetElem.getBoundingClientRect();
-    const sourceX = sourceRect.left + (sourceRect.width / 2);
-    const sourceY = sourceRect.top + (sourceRect.height / 2);
-    const targetX = targetRect.left + (targetRect.width / 2);
-    const targetY = targetRect.top + (targetRect.height / 2);
 
-    const options = { bubbles: true, cancelable: true, view: unsafeWindow };
-
-    sourceElem.dispatchEvent(new MouseEvent('mousedown', { ...options, clientX: sourceX, clientY: sourceY }));
-    targetElem.dispatchEvent(new MouseEvent('mousemove', { ...options, clientX: targetX, clientY: targetY }));
-    targetElem.dispatchEvent(new MouseEvent('mouseup', { ...options, clientX: targetX, clientY: targetY }));
-}
-function smoothDragAndDrop(sourceElem, targetElem) {
-    const sourceRect = sourceElem.getBoundingClientRect();
-    const targetRect = targetElem.getBoundingClientRect();
-    const sourceX = sourceRect.left + (sourceRect.width / 2);
-    const sourceY = sourceRect.top + (sourceRect.height / 2);
-    const targetX = targetRect.left + (targetRect.width / 2);
-    const targetY = targetRect.top + (targetRect.height / 2);
-
-    const options = { bubbles: true, cancelable: true, view: unsafeWindow };
-
-    sourceElem.dispatchEvent(new MouseEvent('mousedown', { ...options, clientX: sourceX, clientY: sourceY }));
-
-    let step = 0;
-    const steps = 10;
-    const dx = (targetX - sourceX) / steps;
-    const dy = (targetY - sourceY) / steps;
-
-    function moveCursor() {
-        step++;
-        const moveX = sourceX + dx * step;
-        const moveY = sourceY + dy * step;
-        targetElem.dispatchEvent(new MouseEvent('mousemove', { ...options, clientX: moveX, clientY: moveY }));
-        if (step < steps) {
-            setTimeout(moveCursor, 50);
-        } else {
-            targetElem.dispatchEvent(new MouseEvent('mouseup', { ...options, clientX: targetX, clientY: targetY }));
-        }
-    }
 
     setTimeout(moveCursor, 10);
 }
@@ -796,100 +761,16 @@ function smoothDragAndDrop(sourceElem, targetElem) {
 
 
         
-            function actionBuyHealth() {
-                // Navigate to General Goods shop
 
-                const inMerchantPage = document.getElementsByClassName("awesome-tabs current")[0].innerHTML == 'General goods'
-                if (!inMerchantPage) {
-                    const submenuParent = document.getElementById("submenu1");
-                    if (submenuParent) {
-                        const anchors = submenuParent.querySelectorAll("a");
-                        anchors[5]?.click();
-                    }
-                } else {
-
-
-                    sleep(1000)
-                    // Click correct shop tab
-                    const shopTabs = document.getElementsByClassName("shopTab");
-                    shopTabs[1]?.click();
-                    sleep(1000)
-
-                    // Find position of cheapest element
-                    const shopArr = document.getElementById("shop")?.children;
-                    if (shopArr) {
-                        let lowestElem = shopArr[0];
-                        let lowestNum;
-
-                        Array.from(shopArr).forEach((item) => {
-                            const str = item.getAttribute("data-tooltip");
-                            if (!str) return;
-                            const regex = /Merchant Price ([\d]+\.?[\d]*)/;
-                            const match = regex.exec(str);
-                            let price;
-                            if (match && match[1]) {
-                                     price = parseInt(match[1].replace('.', '')); // Remove the period before parsing
-                            }
-                            if (price && (!lowestNum || price < lowestNum)) {
-                                lowestNum = price;
-                                lowestElem = item;
-                            }
-                        });
-
-                        const dummyPosition = document.getElementsByClassName("copyright")[0];
-                        sleep(1000)
-                        smoothDragAndDrop(lowestElem, dummyPosition);
-
-                          const invArr = document.getElementById("inv")
-      if (!invArr) {
-        console.log('ERR neni inv')
-        return
-      }
-      let emptySlot = invArr.children[0];
-                        if(emptySlot) {
-debugger;
-                            sleep(1000)
-smoothDragAndDrop(lowestElem, emptySlot);
-
-                        }
-                    }
-                }
-            }
+                    
+                
+            
         
-            function actionHeal() {
-                // Navigate to Overview
-                // Your logic here
-        
-                // Find cheapest inventory position
-                const invArr = document.getElementById("inv")?.children;
-                if (invArr) {
-                    let lowestElem = invArr[0];
-                    let lowestNum;
-        
-                    Array.from(invArr).forEach((item) => {
-                        const str = item.getAttribute("data-tooltip");
-                        if (!str) return;
-                        const regex = /Heals (\d+)/;
-                        const match = regex.exec(str);
-                        let price;
-                        if (match && match[1]) {
-                            price = parseInt(match[1]);
-                        }
-                        if (price && (!lowestNum || price < lowestNum)) {
-                            lowestNum = price;
-                            lowestElem = item;
-                        }
-                    });
-        
-                    const centerAvatar = document.getElementById("avatar");
-                    dragAndDrop(lowestElem, centerAvatar);
-                }
-            }
-
+            
             
         //    actionBuyHealth()
         
-        }
+        
 
         /****************
         * Handle Quests *
@@ -1050,7 +931,74 @@ smoothDragAndDrop(lowestElem, emptySlot);
         /************************
         * Go Arena Provinciarum *
         ************************/
+else if (checkArenaResult == true) {
 
+function readLastArenaFight() {
+    const reportHeader = document.getElementById('reportHeader');
+    if (reportHeader) {
+        const winnerText = reportHeader.querySelector('td:nth-child(2)').textContent;
+        const winner = winnerText.replace('Winner: ', '').trim();
+        console.log(`Winner is ${winner}`);
+
+        // Store the winner's name in local storage
+        localStorage.setItem('lastArenaFightWinner', winner);
+        localStorage.setItem('checkArenaResult', false);
+
+    } else {
+        console.log('Could not find the report header.');
+    }
+}
+
+      function navigateToArenaResults() {
+        const currentTab = document.querySelector('.awesome-tabs.current');
+        if (currentTab) {
+            const currentTabText = currentTab.textContent.trim();
+            if (currentTabText === 'Expedition') {
+                // Click Arena tab
+                const arenaTab = document.querySelector('a[href*="submod=showArena"]');
+                arenaTab?.click();
+            } else if (currentTabText === 'Arena') {
+                // Read last arena fight results
+                clickLastArenaFightDetails();
+            }
+            else if (currentTabText === 'Battle Report') {
+            // On the Fight Details page
+            readLastArenaFight();
+        }
+        } else {
+            // Click battle reports button
+            const battleReportsButton = document.getElementById('menue_reports');
+            battleReportsButton?.click();
+        }
+    }
+function clickLastArenaFightDetails() {
+    const table = document.querySelector('.section-like tbody');
+    if (table) {
+        const firstRow = table.querySelectorAll('tr')[1]; // Skip header row
+        if (firstRow) {
+            const detailsCell = firstRow.querySelector('td:nth-child(4) a');
+            const lootCell = firstRow.querySelector('td:nth-child(3)');
+            const loot = lootCell ? lootCell.textContent.trim() : 'Unknown';
+            localStorage.setItem('lastArenaLoot', loot);
+
+
+            if (detailsCell) {
+                detailsCell.click();
+                console.log('Navigating to the details of the latest arena fight.');
+            } else {
+                console.log('Details link not found for the latest arena fight.');
+            }
+        } else {
+            console.log('No arena fights found.');
+        }
+    } else {
+        console.log('Arena results table not found.');
+    }
+}
+
+
+navigateToArenaResults();
+}
         else if (doArena === true && document.getElementById("cooldown_bar_fill_arena").classList.contains("cooldown_bar_fill_ready") === true) {
             function goArena() {
                 const inArenaPage = document.getElementsByTagName("body")[0].id === "arenaPage";
@@ -1064,6 +1012,7 @@ smoothDragAndDrop(lowestElem, emptySlot);
                     
                      
                       const attackIndex = Math.floor(Math.random() * 4);
+                            localStorage.setItem('checkArenaResult', true);
 
                         document.getElementsByClassName("attack")[attackIndex].click();
                     
