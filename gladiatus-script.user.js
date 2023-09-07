@@ -14,8 +14,9 @@
 // ==/UserScript==
 
 
-(function () {
+(function() {
     'use strict';
+
 
     // Add CSS
 
@@ -23,12 +24,12 @@
         const globalCSS = GM_getResourceText("customCSS_global");
         GM_addStyle(globalCSS);
     };
-
+    
     addCustomCSS();
 
     /*****************
     *     Global     *
-    *****************/
+    *****************/  
 
     const assetsUrl = 'https://raw.githubusercontent.com/ebodziony/gladiatus-script/master/assets';
 
@@ -85,7 +86,7 @@
     };
 
     // Dungeon
-
+    
     let doDungeon = true;
     if (localStorage.getItem('doDungeon')) {
         doDungeon = localStorage.getItem('doDungeon') === "true" ? true : false;
@@ -112,7 +113,7 @@
     // Circus
 
     let doCircus = true;
-    if (localStorage.getItem('doCircus')) {
+    if (localStorage.getItem('doCircus')){
         doCircus = localStorage.getItem('doCircus') === "true" ? true : false;
     };
     if (player.level < 10) {
@@ -129,10 +130,10 @@
     if (localStorage.getItem('doEventExpedition')) {
         doEventExpedition = localStorage.getItem('doEventExpedition') === "true" ? true : false;
     };
-    if (!document.getElementById("submenu2").getElementsByClassName("menuitem glow")[0]) {
+    if (!document.getElementById("submenu2").getElementsByClassName("menuitem glow")[0]){
         doEventExpedition = false;
     };
-
+    
     let eventMonsterId = 0;
     if (localStorage.getItem('eventMonsterId')) {
         eventMonsterId = Number(localStorage.getItem('eventMonsterId'));
@@ -260,8 +261,8 @@
     function setAutoGoActive() {
         sessionStorage.setItem('autoGoActive', true);
         document.getElementById("autoGoButton").innerHTML = 'STOP'
-        document.getElementById("autoGoButton").removeEventListener("click", setAutoGoActive);
-        document.getElementById("autoGoButton").addEventListener("click", setAutoGoInactive);
+        document.getElementById("autoGoButton").removeEventListener ("click", setAutoGoActive);
+        document.getElementById("autoGoButton").addEventListener ("click", setAutoGoInactive);
         autoGo();
     };
 
@@ -269,8 +270,8 @@
     function setAutoGoInactive() {
         sessionStorage.setItem('autoGoActive', false);
         document.getElementById("autoGoButton").innerHTML = 'Auto GO'
-        document.getElementById("autoGoButton").addEventListener("click", setAutoGoActive);
-        document.getElementById("autoGoButton").removeEventListener("click", setAutoGoInactive);
+        document.getElementById("autoGoButton").addEventListener ("click", setAutoGoActive);
+        document.getElementById("autoGoButton").removeEventListener ("click", setAutoGoInactive);
 
         clearTimeout(setTimeout);
 
@@ -284,7 +285,7 @@
     };
 
     // Open Settings
-    function openSettings() {
+    function openSettings(){
 
         function closeSettings() {
             document.getElementById("settingsWindow").remove();
@@ -292,8 +293,8 @@
         };
 
         var settingsWindow = document.createElement("div");
-        settingsWindow.setAttribute("id", "settingsWindow")
-        settingsWindow.innerHTML = `
+            settingsWindow.setAttribute("id", "settingsWindow")
+            settingsWindow.innerHTML = `
                 <span id="settingsLanguage">
                     <img id="languageEN" src="${assetsUrl}/GB.png">
                     <img id="languagePL" src="${assetsUrl}/PL.png">
@@ -418,10 +419,10 @@
         document.getElementById("header_game").insertBefore(settingsWindow, document.getElementById("header_game").children[0]);
 
         var overlayBack = document.createElement("div");
-        const wrapperHeight = document.getElementById("wrapper_game").clientHeight;
-        overlayBack.setAttribute("id", "overlayBack");
-        overlayBack.setAttribute("style", `height: ${wrapperHeight}px;`);
-        overlayBack.addEventListener("click", closeSettings);
+            const wrapperHeight = document.getElementById("wrapper_game").clientHeight;
+            overlayBack.setAttribute("id", "overlayBack");
+            overlayBack.setAttribute("style", `height: ${wrapperHeight}px;`);
+            overlayBack.addEventListener ("click", closeSettings);
         document.getElementsByTagName("body")[0].appendChild(overlayBack);
 
         // Set Language
@@ -446,9 +447,9 @@
             reloadSettings();
         };
 
-        $("#languageEN").click(function () { setLanguage('EN') });
-        $("#languagePL").click(function () { setLanguage('PL') });
-        $("#languageES").click(function () { setLanguage('ES') });
+        $("#languageEN").click(function() { setLanguage('EN') });
+        $("#languagePL").click(function() { setLanguage('PL') });
+        $("#languageES").click(function() { setLanguage('ES') });
 
         // Change Settings
 
@@ -458,8 +459,8 @@
             reloadSettings();
         };
 
-        $("#do_expedition_true").click(function () { setDoExpedition(true) });
-        $("#do_expedition_false").click(function () { setDoExpedition(false) });
+        $("#do_expedition_true").click(function() { setDoExpedition(true) });
+        $("#do_expedition_false").click(function() { setDoExpedition(false) });
 
         function setMonster(id) {
             monsterId = id;
@@ -467,10 +468,10 @@
             reloadSettings();
         };
 
-        $("#set_monster_id_0").click(function () { setMonster('0') });
-        $("#set_monster_id_1").click(function () { setMonster('1') });
-        $("#set_monster_id_2").click(function () { setMonster('2') });
-        $("#set_monster_id_3").click(function () { setMonster('3') });
+        $("#set_monster_id_0").click(function() { setMonster('0') });
+        $("#set_monster_id_1").click(function() { setMonster('1') });
+        $("#set_monster_id_2").click(function() { setMonster('2') });
+        $("#set_monster_id_3").click(function() { setMonster('3') });
 
         function setDoDungeon(bool) {
             doDungeon = bool;
@@ -478,8 +479,8 @@
             reloadSettings();
         };
 
-        $("#do_dungeon_true").click(function () { setDoDungeon(true) });
-        $("#do_dungeon_false").click(function () { setDoDungeon(false) });
+        $("#do_dungeon_true").click(function() { setDoDungeon(true) });
+        $("#do_dungeon_false").click(function() { setDoDungeon(false) });
 
         function setDungeonDifficulty(difficulty) {
             dungeonDifficulty = difficulty;
@@ -487,8 +488,8 @@
             reloadSettings();
         };
 
-        $("#set_dungeon_difficulty_normal").click(function () { setDungeonDifficulty("normal") });
-        $("#set_dungeon_difficulty_advanced").click(function () { setDungeonDifficulty("advanced") });
+        $("#set_dungeon_difficulty_normal").click(function() { setDungeonDifficulty("normal") });
+        $("#set_dungeon_difficulty_advanced").click(function() { setDungeonDifficulty("advanced") });
 
         function setDoArena(bool) {
             doArena = bool;
@@ -496,8 +497,8 @@
             reloadSettings();
         };
 
-        $("#do_arena_true").click(function () { setDoArena(true) });
-        $("#do_arena_false").click(function () { setDoArena(false) });
+        $("#do_arena_true").click(function() { setDoArena(true) });
+        $("#do_arena_false").click(function() { setDoArena(false) });
 
         function setArenaOpponentLevel(level) {
             arenaOpponentLevel = level;
@@ -505,9 +506,9 @@
             reloadSettings();
         };
 
-        $("#set_arena_opponent_level_min").click(function () { setArenaOpponentLevel('min') });
-        $("#set_arena_opponent_level_max").click(function () { setArenaOpponentLevel('max') });
-        $("#set_arena_opponent_level_random").click(function () { setArenaOpponentLevel('random') });
+        $("#set_arena_opponent_level_min").click(function() { setArenaOpponentLevel('min') });
+        $("#set_arena_opponent_level_max").click(function() { setArenaOpponentLevel('max') });
+        $("#set_arena_opponent_level_random").click(function() { setArenaOpponentLevel('random') });
 
         function setDoCircus(bool) {
             doCircus = bool;
@@ -515,8 +516,8 @@
             reloadSettings();
         };
 
-        $("#do_circus_true").click(function () { setDoCircus(true) });
-        $("#do_circus_false").click(function () { setDoCircus(false) });
+        $("#do_circus_true").click(function() { setDoCircus(true) });
+        $("#do_circus_false").click(function() { setDoCircus(false) });
 
         function setCircusOpponentLevel(level) {
             circusOpponentLevel = level;
@@ -524,9 +525,9 @@
             reloadSettings();
         };
 
-        $("#set_circus_opponent_level_min").click(function () { setCircusOpponentLevel('min') });
-        $("#set_circus_opponent_level_max").click(function () { setCircusOpponentLevel('max') });
-        $("#set_circus_opponent_level_random").click(function () { setCircusOpponentLevel('random') });
+        $("#set_circus_opponent_level_min").click(function() { setCircusOpponentLevel('min') });
+        $("#set_circus_opponent_level_max").click(function() { setCircusOpponentLevel('max') });
+        $("#set_circus_opponent_level_random").click(function() { setCircusOpponentLevel('random') });
 
         function setDoQuests(bool) {
             doQuests = bool;
@@ -534,8 +535,8 @@
             reloadSettings();
         };
 
-        $("#do_quests_true").click(function () { setDoQuests(true) });
-        $("#do_quests_false").click(function () { setDoQuests(false) });
+        $("#do_quests_true").click(function() { setDoQuests(true) });
+        $("#do_quests_false").click(function() { setDoQuests(false) });
 
         function setQuestTypes(type) {
             questTypes[type] = !questTypes[type];
@@ -543,12 +544,12 @@
             reloadSettings();
         };
 
-        $("#do_combat_quests").click(function () { setQuestTypes('combat') });
-        $("#do_arena_quests").click(function () { setQuestTypes('arena') });
-        $("#do_circus_quests").click(function () { setQuestTypes('circus') });
-        $("#do_expedition_quests").click(function () { setQuestTypes('expedition') });
-        $("#do_dungeon_quests").click(function () { setQuestTypes('dungeon') });
-        $("#do_items_quests").click(function () { setQuestTypes('items') });
+        $("#do_combat_quests").click(function() { setQuestTypes('combat') });
+        $("#do_arena_quests").click(function() { setQuestTypes('arena') });
+        $("#do_circus_quests").click(function() { setQuestTypes('circus') });
+        $("#do_expedition_quests").click(function() { setQuestTypes('expedition') });
+        $("#do_dungeon_quests").click(function() { setQuestTypes('dungeon') });
+        $("#do_items_quests").click(function() { setQuestTypes('items') });
 
         function setDoEventExpedition(bool) {
             doEventExpedition = bool;
@@ -556,8 +557,8 @@
             reloadSettings();
         };
 
-        $("#do_event_expedition_true").click(function () { setDoEventExpedition(true) });
-        $("#do_event_expedition_false").click(function () { setDoEventExpedition(false) });
+        $("#do_event_expedition_true").click(function() { setDoEventExpedition(true) });
+        $("#do_event_expedition_false").click(function() { setDoEventExpedition(false) });
 
         function setEventMonster(id) {
             eventMonsterId = id;
@@ -565,10 +566,10 @@
             reloadSettings();
         };
 
-        $("#set_event_monster_id_0").click(function () { setEventMonster('0') });
-        $("#set_event_monster_id_1").click(function () { setEventMonster('1') });
-        $("#set_event_monster_id_2").click(function () { setEventMonster('2') });
-        $("#set_event_monster_id_3").click(function () { setEventMonster('3') });
+        $("#set_event_monster_id_0").click(function() { setEventMonster('0') });
+        $("#set_event_monster_id_1").click(function() { setEventMonster('1') });
+        $("#set_event_monster_id_2").click(function() { setEventMonster('2') });
+        $("#set_event_monster_id_3").click(function() { setEventMonster('3') });
 
         function reloadSettings() {
             closeSettings();
@@ -594,7 +595,7 @@
 
             $('#quests_settings').addClass(doQuests ? 'active' : 'inactive');
             $(`#do_quests_${doQuests}`).addClass('active');
-
+            
             for (const type in questTypes) {
                 if (questTypes[type]) {
                     $(`#do_${type}_quests`).addClass('active');
@@ -615,12 +616,12 @@
     autoGoButton.setAttribute("id", "autoGoButton")
     autoGoButton.className = 'menuitem';
 
-    if (autoGoActive == false) {
+    if (autoGoActive == false){
         autoGoButton.innerHTML = 'Auto GO';
-        autoGoButton.addEventListener("click", setAutoGoActive);
+        autoGoButton.addEventListener ("click", setAutoGoActive);
     } else {
         autoGoButton.innerHTML = 'STOP';
-        autoGoButton.addEventListener("click", setAutoGoInactive);
+        autoGoButton.addEventListener ("click", setAutoGoInactive);
     };
 
     document.getElementById("mainmenu").insertBefore(autoGoButton, document.getElementById("mainmenu").children[0]);
@@ -630,15 +631,17 @@
     var settingsButton = document.createElement("button");
     settingsButton.className = 'menuitem';
     settingsButton.innerHTML = `<img src="${assetsUrl}/cog.svg" title="Ustawienia" height="20" width="20" style="filter: invert(83%) sepia(52%) saturate(503%) hue-rotate(85deg) brightness(103%) contrast(101%); z-index: 999;">`;
-    settingsButton.setAttribute("style", "display: flex; justify-content: center; align-items: center; height: 27px; width: 27px; cursor: pointer; border: none; color: #5dce5d; padding: 0; background-image: url('https://i.imgur.com/jf7BXTX.png')");
-    settingsButton.addEventListener("click", openSettings);
+    settingsButton.setAttribute("style", "display: flex; justify-content: center; align-items: center; height: 27px; width: 27px; cursor: pointer; border: none; color: #5dce5d; padding: 0; background-image: url('https://i.imgur.com/jf7BXTX.png')" );
+    settingsButton.addEventListener ("click", openSettings);
     document.getElementById("mainmenu").insertBefore(settingsButton, document.getElementById("mainmenu").children[1]);
 
     /****************
     *    Helpers    *
     ****************/
 
-
+    function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
     function getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -699,7 +702,7 @@
         // Claim Daily Reward
 
         if (document.getElementById("blackoutDialogLoginBonus") !== null) {
-            setTimeout(function () {
+            setTimeout(function(){
                 document.getElementById("blackoutDialogLoginBonus").getElementsByTagName("input")[0].click();
             }, clickDelay);
         };
@@ -707,7 +710,7 @@
         // Close Notifications
 
         if (document.getElementById("blackoutDialognotification") !== null && document.getElementById("blackoutDialognotification").isDisplayed()) {
-            setTimeout(function () {
+            setTimeout(function(){
                 document.getElementById("blackoutDialognotification").getElementsByTagName("input")[0].click();
             }, clickDelay);
         };
@@ -716,8 +719,9 @@
         *   Use Food   *
         ***************/
 
-        if (player.hp < 100) {
+        if (player.hp < 10 ) {
             console.log("Low health");
+   
 
             var lowHealthAlert = document.createElement("div");
 
@@ -743,25 +747,59 @@
             };
             showLowHealthAlert();
 
-            function dragAndDrop(sourceElem, targetElem) {
-                const sourceRect = sourceElem.getBoundingClientRect();
-                const targetRect = targetElem.getBoundingClientRect();
-                const sourceX = sourceRect.left + (sourceRect.width / 2);
-                const sourceY = sourceRect.top + (sourceRect.height / 2);
-                const targetX = targetRect.left + (targetRect.width / 2);
-                const targetY = targetRect.top + (targetRect.height / 2);
+     function dragAndDrop(sourceElem, targetElem) {
+    const sourceRect = sourceElem.getBoundingClientRect();
+    const targetRect = targetElem.getBoundingClientRect();
+    const sourceX = sourceRect.left + (sourceRect.width / 2);
+    const sourceY = sourceRect.top + (sourceRect.height / 2);
+    const targetX = targetRect.left + (targetRect.width / 2);
+    const targetY = targetRect.top + (targetRect.height / 2);
 
-                const options = { bubbles: true, cancelable: true, view: window };
+    const options = { bubbles: true, cancelable: true, view: unsafeWindow };
 
-                sourceElem.dispatchEvent(new MouseEvent('mousedown', options));
-                targetElem.dispatchEvent(new MouseEvent('mousemove', { ...options, clientX: targetX, clientY: targetY }));
-                targetElem.dispatchEvent(new MouseEvent('mouseup', options));
-            }
+    sourceElem.dispatchEvent(new MouseEvent('mousedown', { ...options, clientX: sourceX, clientY: sourceY }));
+    targetElem.dispatchEvent(new MouseEvent('mousemove', { ...options, clientX: targetX, clientY: targetY }));
+    targetElem.dispatchEvent(new MouseEvent('mouseup', { ...options, clientX: targetX, clientY: targetY }));
+}
+function smoothDragAndDrop(sourceElem, targetElem) {
+    const sourceRect = sourceElem.getBoundingClientRect();
+    const targetRect = targetElem.getBoundingClientRect();
+    const sourceX = sourceRect.left + (sourceRect.width / 2);
+    const sourceY = sourceRect.top + (sourceRect.height / 2);
+    const targetX = targetRect.left + (targetRect.width / 2);
+    const targetY = targetRect.top + (targetRect.height / 2);
 
+    const options = { bubbles: true, cancelable: true, view: unsafeWindow };
+
+    sourceElem.dispatchEvent(new MouseEvent('mousedown', { ...options, clientX: sourceX, clientY: sourceY }));
+
+    let step = 0;
+    const steps = 10;
+    const dx = (targetX - sourceX) / steps;
+    const dy = (targetY - sourceY) / steps;
+
+    function moveCursor() {
+        step++;
+        const moveX = sourceX + dx * step;
+        const moveY = sourceY + dy * step;
+        targetElem.dispatchEvent(new MouseEvent('mousemove', { ...options, clientX: moveX, clientY: moveY }));
+        if (step < steps) {
+            setTimeout(moveCursor, 50);
+        } else {
+            targetElem.dispatchEvent(new MouseEvent('mouseup', { ...options, clientX: targetX, clientY: targetY }));
+        }
+    }
+
+    setTimeout(moveCursor, 10);
+}
+
+
+
+        
             function actionBuyHealth() {
                 // Navigate to General Goods shop
 
-                inMerchantPage = document.getElementsByClassName("awesome-tabs current")[0].innerHTML == 'Vetešník'
+                const inMerchantPage = document.getElementsByClassName("awesome-tabs current")[0].innerHTML == 'General goods'
                 if (!inMerchantPage) {
                     const submenuParent = document.getElementById("submenu1");
                     if (submenuParent) {
@@ -771,11 +809,11 @@
                 } else {
 
 
-                    setTimeout(1000)
+                    sleep(1000)
                     // Click correct shop tab
                     const shopTabs = document.getElementsByClassName("shopTab");
                     shopTabs[1]?.click();
-                    setTimeout(1000)
+                    sleep(1000)
 
                     // Find position of cheapest element
                     const shopArr = document.getElementById("shop")?.children;
@@ -786,11 +824,11 @@
                         Array.from(shopArr).forEach((item) => {
                             const str = item.getAttribute("data-tooltip");
                             if (!str) return;
-                            const regex = /Merchant Price (\d+)/;
+                            const regex = /Merchant Price ([\d]+\.?[\d]*)/;
                             const match = regex.exec(str);
                             let price;
                             if (match && match[1]) {
-                                price = parseInt(match[1]);
+                                     price = parseInt(match[1].replace('.', '')); // Remove the period before parsing
                             }
                             if (price && (!lowestNum || price < lowestNum)) {
                                 lowestNum = price;
@@ -799,22 +837,35 @@
                         });
 
                         const dummyPosition = document.getElementsByClassName("copyright")[0];
-                        dragAndDrop(lowestElem, dummyPosition);
-                        debugger;
+                        sleep(1000)
+                        smoothDragAndDrop(lowestElem, dummyPosition);
+
+                          const invArr = document.getElementById("inv")
+      if (!invArr) {
+        console.log('ERR neni inv')
+        return
+      }
+      let emptySlot = invArr.children[0];
+                        if(emptySlot) {
+debugger;
+                            sleep(1000)
+smoothDragAndDrop(lowestElem, emptySlot);
+
+                        }
                     }
                 }
             }
-
+        
             function actionHeal() {
                 // Navigate to Overview
                 // Your logic here
-
+        
                 // Find cheapest inventory position
                 const invArr = document.getElementById("inv")?.children;
                 if (invArr) {
                     let lowestElem = invArr[0];
                     let lowestNum;
-
+        
                     Array.from(invArr).forEach((item) => {
                         const str = item.getAttribute("data-tooltip");
                         if (!str) return;
@@ -829,15 +880,15 @@
                             lowestElem = item;
                         }
                     });
-
+        
                     const centerAvatar = document.getElementById("avatar");
                     dragAndDrop(lowestElem, centerAvatar);
                 }
             }
 
-
-            actionBuyHealth()
-
+            
+        //    actionBuyHealth()
+        
         }
 
         /****************
@@ -879,7 +930,7 @@
                         if (url.includes('8aada67d4c5601e009b9d2a88f478c')) {
                             return 'combat';
                         }
-
+                        
                         if (url.includes('00f1a594723515a77dcd6d66c918fb')) {
                             return 'arena';
                         }
@@ -915,10 +966,10 @@
                         if (questTypes[icon]) {
                             return quest.getElementsByClassName("quest_slot_button_accept")[0].click();
                         };
-                    }
+                    }           
 
                     $("#quest_footer_reroll input").first().click()
-                }
+                }  
 
                 checkNextQuestTime();
             }
@@ -939,7 +990,7 @@
                 autoGo();
             }
 
-            setTimeout(function () {
+            setTimeout(function(){
                 completeQuests();
             }, clickDelay);
         }
@@ -955,12 +1006,12 @@
 
                 if (!inExpeditionPage || inEventExpeditionPage) {
                     document.getElementsByClassName("cooldown_bar_link")[0].click();
-                } else {
+                } else { 
                     document.getElementsByClassName("expedition_button")[monsterId].click();
                 };
             };
 
-            setTimeout(function () {
+            setTimeout(function(){
                 goExpedition();
             }, clickDelay);
 
@@ -991,7 +1042,7 @@
                 };
             };
 
-            setTimeout(function () {
+            setTimeout(function(){
                 goDungeon();
             }, clickDelay);
         }
@@ -1009,16 +1060,17 @@
                 } else if (!inArenaPage) {
                     document.getElementsByClassName("cooldown_bar_link")[2].click();
                 } else {
+                   
+                    
+                     
+                      const attackIndex = Math.floor(Math.random() * 4);
 
-
-
-
-                    document.getElementsByClassName("attack")[3].click();
-
+                        document.getElementsByClassName("attack")[attackIndex].click();
+                    
                 }
             };
 
-            setTimeout(function () {
+            setTimeout(function(){
                 goArena();
             }, clickDelay + 600);
 
@@ -1039,7 +1091,7 @@
 
                     if (!inCircusProvPage) {
                         document.getElementsByTagName("td")[3].firstElementChild.click();
-                    } else {
+                    } else { 
                         const levels = new Array();
                         levels[0] = Number(document.getElementById("own3").getElementsByTagName("td")[1].firstChild.nodeValue)
                         levels[1] = Number(document.getElementById("own3").getElementsByTagName("td")[5].firstChild.nodeValue)
@@ -1062,7 +1114,7 @@
                 };
             };
 
-            setTimeout(function () {
+            setTimeout(function(){
                 goCircus();
             }, clickDelay + 600);
 
@@ -1080,7 +1132,7 @@
                     document.getElementById("submenu2").getElementsByClassName("menuitem glow")[0].click();
                 } else {
                     eventPoints = document.getElementById("content").getElementsByClassName("section-header")[0].getElementsByTagName("p")[1].firstChild.nodeValue.replace(/[^0-9]/gi, '')
-                    localStorage.setItem('eventPoints', JSON.stringify({ count: eventPoints, date: currentDate }));
+                    localStorage.setItem('eventPoints', JSON.stringify({count: eventPoints, date: currentDate}));
 
                     const isTimer = $('#content .ticker').first()
 
@@ -1092,14 +1144,14 @@
                     } else if (eventPoints == 0) {
                         location.reload();
                     } else if (eventPoints == 1 && eventMonsterId == 3) {
-                        localStorage.setItem('eventPoints', JSON.stringify({ count: 0, date: currentDate }));
+                        localStorage.setItem('eventPoints', JSON.stringify({count: 0, date: currentDate}));
 
                         document.getElementsByClassName("expedition_button")[2].click();
                     } else {
                         if (eventMonsterId == 3) {
-                            localStorage.setItem('eventPoints', JSON.stringify({ count: eventPoints - 2, date: currentDate }));
+                            localStorage.setItem('eventPoints', JSON.stringify({count: eventPoints - 2, date: currentDate}));
                         } else {
-                            localStorage.setItem('eventPoints', JSON.stringify({ count: eventPoints - 1, date: currentDate }));
+                            localStorage.setItem('eventPoints', JSON.stringify({count: eventPoints - 1, date: currentDate}));
                         }
 
                         nextEventExpeditionTime = currentTime + 303000;
@@ -1107,10 +1159,10 @@
 
                         document.getElementsByClassName("expedition_button")[eventMonsterId].click();
                     }
-                }
+                }                
             };
 
-            setTimeout(function () {
+            setTimeout(function(){
                 goEventExpedition();
             }, clickDelay);
 
@@ -1128,7 +1180,7 @@
 
             if (safeMode === false) {
                 const actions = [];
-
+    
                 if (doExpedition === true) {
                     const timeTo = convertTimeToMs(document.getElementById("cooldown_bar_text_expedition").innerText);
 
@@ -1195,7 +1247,7 @@
                 const nextAction = getNextAction(actions);
 
                 // @TODO fix nextAction if !actions.length
-
+    
                 function formatTime(timeInMs) {
                     if (timeInMs < 1000) {
                         return "0:00:00"
@@ -1213,12 +1265,12 @@
                         mins = "0" + mins;
                     };
                     let hrs = (timeInSecs - mins) / 60;
-
+    
                     return hrs + ':' + mins + ':' + secs;
                 };
 
                 var nextActionWindow = document.createElement("div");
-
+    
                 function showNextActionWindow() {
                     nextActionWindow.setAttribute("id", "nextActionWindow")
                     nextActionWindow.setAttribute("style", `
@@ -1247,22 +1299,22 @@
                 showNextActionWindow();
 
                 let nextActionCounter;
-
-                nextActionCounter = setInterval(function () {
+    
+                nextActionCounter = setInterval(function() {
                     nextAction.time = nextAction.time - 1000;
-
+    
                     nextActionWindow.innerHTML = `
                         <span style="color: #fff;">${content.nextAction}: </span>
                         <span>${content[nextAction.name]}</span></br>
                         <span style="color: #fff;">${content.in}: </span>
                         <span>${formatTime(nextAction.time)}</span>`;
-
+    
                     if (nextAction.time <= 0) {
                         if (nextAction.index === 4) {
                             document.getElementById("submenu2").getElementsByClassName("menuitem glow")[0].click();
                         }
                         else {
-                            setTimeout(function () {
+                            setTimeout(function(){
                                 document.getElementsByClassName("cooldown_bar_link")[nextAction.index].click();
                             }, clickDelay);
                         };
